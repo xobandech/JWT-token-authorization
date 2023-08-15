@@ -1,5 +1,6 @@
 const CustomAPIError = require("../errors/custom-error");
 const jwt = require("jsonwebtoken");
+const { UnauthentificatedError } = require("../errors/index")
 
 const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -15,7 +16,7 @@ const authMiddleware = async (req, res, next) => {
     req.user = { id, username };
     next();
   } catch (error) {
-    throw new CustomAPIError("Not authorized to this route", 401);
+    throw new UnauthentificatedError("Not authorized to this route");
   }
 };
 
